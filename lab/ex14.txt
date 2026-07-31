@@ -1,0 +1,25 @@
+# One-Time Pad (Vigenere Cipher)
+
+def encrypt(text, key):
+    text = text.replace(" ", "").lower()
+    return ''.join(chr((ord(c)-97+k) % 26 + 97)
+                   for c, k in zip(text, key))
+
+def decrypt(text, key):
+    return ''.join(chr((ord(c)-97-k) % 26 + 97)
+                   for c, k in zip(text, key))
+
+# Part (a)
+plaintext = "send more money"
+key = [9, 0, 1, 7, 23, 15, 21, 14, 11, 11, 2, 8, 9]
+
+ciphertext = encrypt(plaintext, key)
+print("Ciphertext:", ciphertext)
+
+# Part (b)
+new_plaintext = "cash not needed".replace(" ", "")
+new_key = [(ord(c)-ord(p)) % 26
+           for c, p in zip(ciphertext, new_plaintext)]
+
+print("New Key:", new_key)
+print("Decrypted:", decrypt(ciphertext, new_key))

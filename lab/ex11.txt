@@ -1,0 +1,20 @@
+import math
+
+# Playfair cipher uses a 5x5 matrix
+# Number of possible keys = 25!
+
+keys = math.factorial(25)
+
+# Express as approximate power of 2
+power_of_2 = math.log2(keys)
+
+print("Possible Playfair keys:", keys)
+print("Approximate power of 2: 2^", round(power_of_2, 2))
+
+# Effectively unique keys
+# 25! / (25 * 25) = 23!
+unique_keys = math.factorial(23)
+unique_power = math.log2(unique_keys)
+
+print("Effectively unique keys:", unique_keys)
+print("Approximate power of 2: 2^", round(unique_power, 2))

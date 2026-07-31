@@ -1,0 +1,61 @@
+# Playfair Cipher Encryption
+
+matrix = [
+    ['M', 'F', 'H', 'I', 'K'],
+    ['U', 'N', 'O', 'P', 'Q'],
+    ['Z', 'V', 'W', 'X', 'Y'],
+    ['E', 'L', 'A', 'R', 'G'],
+    ['D', 'S', 'T', 'B', 'C']
+]
+
+message = "Must see you over Cadogan West. Coming at once."
+
+# Prepare message
+text = ''.join(ch.upper() for ch in message if ch.isalpha())
+text = text.replace('J', 'I')
+
+# Split into pairs
+pairs = []
+i = 0
+while i < len(text):
+    a = text[i]
+    if i + 1 < len(text):
+        b = text[i + 1]
+    else:
+        b = 'X'
+
+    if a == b:
+        pairs.append(a + 'X')
+        i += 1
+    else:
+        pairs.append(a + b)
+        i += 2
+
+# Find position of a character
+def position(ch):
+    for r in range(5):
+        for c in range(5):
+            if matrix[r][c] == ch:
+                return r, c
+
+# Encrypt each pair
+ciphertext = ""
+
+for pair in pairs:
+    a, b = pair
+    r1, c1 = position(a)
+    r2, c2 = position(b)
+
+    if r1 == r2:
+        ciphertext += matrix[r1][(c1 + 1) % 5]
+        ciphertext += matrix[r2][(c2 + 1) % 5]
+
+    elif c1 == c2:
+        ciphertext += matrix[(r1 + 1) % 5][c1]
+        ciphertext += matrix[(r2 + 1) % 5][c2]
+
+    else:
+        ciphertext += matrix[r1][c2]
+        ciphertext += matrix[r2][c1]
+
+print("Encrypted Message:", ciphertext)

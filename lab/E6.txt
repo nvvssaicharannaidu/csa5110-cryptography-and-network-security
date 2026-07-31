@@ -1,0 +1,16 @@
+import string
+
+cipher = input("Enter ciphertext: ").upper()
+a, b = 3, 15
+inv = pow(a, -1, 26)
+
+plain = ""
+for ch in cipher:
+    if ch.isalpha():
+        c = ord(ch) - 65
+        p = (inv * (c - b)) % 26
+        plain += chr(p + 65)
+    else:
+        plain += ch
+
+print("Plaintext:", plain)

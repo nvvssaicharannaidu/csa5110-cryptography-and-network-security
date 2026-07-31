@@ -1,0 +1,29 @@
+# Letter Frequency Attack on Additive Cipher
+
+from collections import Counter
+
+def decrypt(ciphertext, shift):
+    return ''.join(
+        chr((ord(c) - 97 - shift) % 26 + 97) if c.isalpha() else c
+        for c in ciphertext.lower()
+    )
+
+def score(text):
+    freq = "etaoinshrdlucmfwypvbgkjqxz"
+    count = Counter(c for c in text if c.isalpha())
+    return sum(count[c] * (26 - i) for i, c in enumerate(freq))
+
+ciphertext = input("Enter ciphertext: ")
+n = int(input("How many possible plaintexts? "))
+
+results = []
+
+for shift in range(26):
+    plaintext = decrypt(ciphertext, shift)
+    results.append((score(plaintext), shift, plaintext))
+
+results.sort(reverse=True)
+
+print("\nTop", n, "Possible Plaintexts:")
+for i, (s, shift, text) in enumerate(results[:n], 1):
+    print(i, "Shift =", shift, ":", text)

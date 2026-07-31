@@ -1,0 +1,23 @@
+# Monoalphabetic Cipher using Keyword
+
+plaintext = input("Enter plaintext: ").lower()
+keyword = "cipher"
+
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+# Create cipher alphabet using keyword
+cipher = ""
+for ch in keyword + alphabet:
+    if ch not in cipher:
+        cipher += ch
+
+# Encrypt plaintext
+encrypted = ""
+for ch in plaintext:
+    if ch in alphabet:
+        encrypted += cipher[alphabet.index(ch)]
+    else:
+        encrypted += ch
+
+print("Cipher Alphabet:", cipher.upper())
+print("Encrypted Text:", encrypted.upper())

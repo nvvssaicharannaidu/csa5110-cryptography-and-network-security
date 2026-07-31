@@ -1,0 +1,28 @@
+# Hill Cipher - Known Plaintext Attack
+
+import numpy as np
+
+# Known plaintext and corresponding ciphertext
+P = np.array([[0, 1], [1, 2]])       # HI, BK
+C = np.array([[7, 0], [8, 11]])      # IS, IL
+
+# Find inverse of plaintext matrix modulo 26
+def inverse_mod(A, mod=26):
+    det = int(round(np.linalg.det(A))) % mod
+    inv_det = pow(det, -1, mod)
+    adj = np.array([[A[1,1], -A[0,1]],
+                    [-A[1,0], A[0,0]]])
+    return (inv_det * adj) % mod
+
+# Recover Hill cipher key
+K = (C @ inverse_mod(P)) % 26
+
+print("Recovered Key Matrix:")
+print(K)
+
+# Chosen plaintext attack
+plaintext = np.array([[0], [1]])  # AB
+ciphertext = (K @ plaintext) % 26
+
+print("Plaintext: AB")
+print("Ciphertext:", ''.join(chr(x[0] + 65) for x in ciphertext))

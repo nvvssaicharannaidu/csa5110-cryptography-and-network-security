@@ -1,0 +1,12 @@
+def xor(a,b):
+    return bytes(x^y for x,y in zip(a,b))
+
+X=b"ABCDEFGH"
+T=b"12345678"
+
+second=xor(X,T)
+forged=X+second
+
+print("Original X:",X)
+print("MAC T:",T)
+print("Forged message:",forged)
